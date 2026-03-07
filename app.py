@@ -2,6 +2,7 @@ from flask import Flask
 from dotenv import load_dotenv
 
 from data.database import init_db
+from routes import main
 
 load_dotenv()
 
@@ -11,3 +12,5 @@ init_db(app = app)
 @app.route('/')
 def home():
     return 'Hello World !'
+
+app.register_blueprint(main.page)
