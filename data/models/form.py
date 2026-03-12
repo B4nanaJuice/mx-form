@@ -22,4 +22,24 @@ class Form(db.Model):
         return f'<Form {self.id}>'
     
     def __len__(self):
-        return len(self.blocks)
+        return len(self.blocks)        return len(self.blocks)
+
+def get_forms() -> List[Form]:
+    _query = db.select(Form)
+    forms: List[Form] = db.session.execute(_query).scalars()
+    return forms
+    
+def get_form_by_id(form_id: int) -> Form | None:
+    _query = db.select(Form).where(Form.id == form_id)
+    form: Form | None = db.session.execute(_query).scalar_one_or_none()
+    return form
+
+def get_form_by_token(form_token: str) -> Form | None:
+    _query = db.select(Form).where(Form.token == form_token)
+    form: Form | None = db.session.execute(_query).scalar_one_or_none()
+    return form
+
+def get_forms_by_owner(owner_id: int) -> List[Form]:
+    _query = db.select(Form).where(Form.owner == owner_id)
+    forms: List[Form] = db.session.execute(_query).scalars()
+    return forms
